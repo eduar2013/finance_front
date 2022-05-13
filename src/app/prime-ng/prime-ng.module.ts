@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {PanelModule} from 'primeng/panel';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
   exports : [
     MenuModule,
     BrowserAnimationsModule,
-    PanelModule
+    TableModule
   ]
 })
 export class PrimeNgModule { }
