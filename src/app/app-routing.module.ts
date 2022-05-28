@@ -5,7 +5,7 @@ import { PaymentsComponent } from './loans/pages/payments/payments.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'loans',
     component: LoansComponent,
     pathMatch: 'full'
   },
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path:'**',
-    redirectTo:''
+    redirectTo:'loans'
   }
 ];
 
