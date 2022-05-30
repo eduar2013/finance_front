@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoansComponent } from './pages/loans/loans.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
   ],
   imports: [
     CommonModule,
-    PrimeNgModule
+    PrimeNgModule,
+    FormsModule
   ]
 })
 export class LoansModule { }

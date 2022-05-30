@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ConfirmationService, ConfirmEventType, Message, MessageService} from 'primeng/api';
 import { LoanInterface } from '../../interfaces/Loan.interface';
 import { LoansService } from '../../services/loans.service';
+
+
 
 @Component({
   selector: 'app-loans',
@@ -29,22 +31,22 @@ import { LoansService } from '../../services/loans.service';
 export class LoansComponent  implements OnInit{
 
   display: boolean = false;
+  position?: string;
 
   banks: any[] = [];
 
+  val:string='';
+
   loan : LoanInterface = {
-    id: '',
-    value: 0,
-    bank: '',
-    disbursementDate: new Date,
-    installmentValue: 0,
-    currentValue: 0,
-    monthlyInterestRate: 0,
-    annualisedInterestRate: 0,
-    scheduledInstallments: 0,
-    lastUpdateDate: new Date,
-    payments: []
+   bank :'davivienda',
+   installmentValue:1145000,
+   disbursementDate:new Date,
+   annualisedInterestRate:12,
+   scheduledInstallments:72,
+   value:70000000,
+   monthlyInterestRate:0.81
   };
+
 
   showDialog() {
       this.display = true;
@@ -52,22 +54,52 @@ export class LoansComponent  implements OnInit{
 
   hideDialog() {
     this.display = false;
-}
+  }
+
+  saveLoan(){
+    console.log(this.loan);
+    this.loanService.saveLoan(this.loan);
+    this.hideDialog();
+  }
+
+
+  deleteLoan(loanDelete:LoanInterface){
+    this.messageService.clear();
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+          this.loanService.deleteLoan(loanDelete);
+          this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted', life:3000});
+      },
+      reject: (type: any) => {
+          switch(type) {
+              case ConfirmEventType.REJECT:
+                  this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+              break;
+              case ConfirmEventType.CANCEL:
+                  this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+              break;
+          }
+      }
+  });
+  }
 
   getResultados() : LoanInterface[]{
     return this.loanService.resultados;
   }
 
-  constructor(private loanService :LoansService) {
+  constructor(private loanService :LoansService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.loanService.buscarLoans();
   }
 
   ngOnInit() {
 
     this.banks = [
-        {label: 'Bancolombia', value: 'bancolombia'},
-        {label: 'Davivienda', value: 'davivienda'},
-        {label: 'Colpatria', value: 'colpatria'}
+        {label: 'Bancolombia', value: 'Bancolombia'},
+        {label: 'Davivienda', value: 'Davivienda'},
+        {label: 'Colpatria', value: 'Colpatria'}
     ];
 }
 
